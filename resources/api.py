@@ -6,9 +6,7 @@ from flask import send_file
 import os
 
 from models import YoutubeModel
-from schemas import (YoutubeSchema,
-                     YoutubePlaylistSchema,
-                     YoutubeSearchSchema)
+from schemas import YoutubeSchema, YoutubePlaylistSchema, YoutubeSearchSchema
 
 blp = Blueprint("Youtube Downloader", __name__, description="Operation on YoutubeDownloader")
 
@@ -16,8 +14,10 @@ blp = Blueprint("Youtube Downloader", __name__, description="Operation on Youtub
 class SearchByLink(MethodView):
     @blp.arguments(YoutubeSearchSchema)
     @blp.response(200, YoutubeSearchSchema)
-    @blp.doc(summary="Get list of Youtube Object by 'video_title' (Can also pass Youtube Link to search for specific video)",
-             description="Return Data of Youtube Video based on given title")
+    @blp.doc(
+        summary="Get list of Youtube Object by 'video_title' (Can also pass Youtube Link to search for specific video)",
+        description="Return Data of Youtube Video based on given title",
+    )
     def post(self, req_data):
         title = req_data['search_query']
         try:
@@ -47,8 +47,10 @@ class SearchByLink(MethodView):
 @blp.route("/search/<string:video_id>")
 class SearchByID(MethodView):
     @blp.response(200, YoutubeSchema)
-    @blp.doc(summary="Fetch Youtube Object by ID",
-             description="Return Data of Youtube Object based on the given 'video_id'")
+    @blp.doc(
+        summary="Fetch Youtube Object by ID",
+        description="Return Data of Youtube Object based on the given 'video_id'",
+    )
     def get(self, video_id):
         try:
             yt = YouTube.from_id(video_id)
@@ -93,8 +95,10 @@ class SearchPlaylist(MethodView):
         
 @blp.route('/download/mp4/<string:video_id>')
 class DownloadVideo(MethodView):
-    @blp.doc(summary="Download Video based on the given (video_id)",
-             description="Return an mp4 file of the (video_id)")
+    @blp.doc(
+        summary="Download Video based on the given (video_id)",
+        description="Return an mp4 file of the (video_id)",
+    )
     def get(self, video_id):
         try:
             # Download the video using pytube
@@ -118,8 +122,10 @@ class DownloadVideo(MethodView):
         
 @blp.route('/download/mp3/<string:video_id>')
 class DownloadAudio(MethodView):
-    @blp.doc(summary="Download Audio based on the given (video_id)",
-             description="Return an mp3 file of the given (video_id)")
+    @blp.doc(
+        summary="Download Audio based on the given (video_id)",
+        description="Return an mp3 file of the given (video_id)",
+    )
     def get(self, video_id):
         try:
             # Download the video using pytube
