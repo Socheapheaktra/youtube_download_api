@@ -113,7 +113,6 @@ class DownloadVideo(MethodView):
                 download_name=f"{video.title}.mp4"
             )
         except Exception as err:
-            os.remove(video_file)
             abort(500, message=f"{err}")
         else:
             # remove file from server storage
